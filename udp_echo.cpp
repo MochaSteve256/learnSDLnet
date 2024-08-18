@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
             std::cout << "Received packet from " << SDLNet_ResolveIP(&packet->address) << std::endl;
             std::cout << "Data: " << packet->data << std::endl;
             SDLNet_UDP_Send(server, -1, packet);
+            memset(packet->data, 0, BUFFERSIZE);
         }
 
         SDL_Delay(100);
