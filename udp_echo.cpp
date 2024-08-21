@@ -20,7 +20,7 @@ void signalHandler(int signum) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalHandler);
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
+    if (SDL_Init(SDL_INIT_TIMER) == -1) {
         std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
         return -1;
     }
@@ -51,15 +51,21 @@ int main(int argc, char **argv) {
     std::cout << "Press Ctrl+C to exit" << std::endl;
 
     while (running) {
-        if (SDLNet_UDP_Recv(server, packet) > 0) {
+        int recv = SDLNet_UDP_Recv(server, packet);
+        if (recv == -1) {
+            std::cout << "SDLNet_UDP_Recv error: " << SDLNet_GetError() << std::endl;
+        } else if (recv > 0) {
             std::cout << "Received packet from " << SDLNet_ResolveIP(&packet->address) << std::endl;
             std::cout << "Data: " << packet->data << std::endl;
-            SDLNet_UDP_Send(server, -1, packet);
+            if (SDLNet_UDP_Send(server, -1, packet) == 0) {
+                std::cout << "SDLNet_UDP_Send error: " << SDLNet_GetError() << std::endl;
+            }
             memset(packet->data, 0, BUFFERSIZE);
         }
 
         SDL_Delay(100);
-    }
+}
+
 
     SDLNet_FreePacket(packet);
     SDLNet_UDP_Close(server);
