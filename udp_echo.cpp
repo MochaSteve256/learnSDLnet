@@ -20,7 +20,7 @@ void signalHandler(int signum) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalHandler);
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
+    if (SDL_Init(SDL_INIT_TIMER) == -1) {
         std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
         return -1;
     }
