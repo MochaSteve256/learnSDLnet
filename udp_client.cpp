@@ -1,9 +1,10 @@
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_net.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_net.h>
 
 
 #define BUFFER_SIZE 1024
