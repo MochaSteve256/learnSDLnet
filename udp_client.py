@@ -15,7 +15,7 @@ def udp_client(host, port):
             break
         
         if message.lower() == 'exit':
-            print("Exiting...")
+            print("Exit")
             break
         
         try:
