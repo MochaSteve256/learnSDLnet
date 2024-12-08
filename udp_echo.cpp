@@ -1,3 +1,4 @@
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_net.h>
 
@@ -5,7 +6,6 @@
 #include <csignal>
 #include <atomic>
 
-#define PORT 12345
 #define BUFFERSIZE 1024
 
 
@@ -17,8 +17,14 @@ void signalHandler(int signum) {
 }
 
 
-int main(int argc, char **argv) {
+int main(int argc, char* argv[]) {
     signal(SIGINT, signalHandler);
+
+    uint16_t PORT = 12345;
+
+    if (argc == 2) {
+        PORT = atoi(argv[1]);
+    }
 
     if (SDL_Init(SDL_INIT_TIMER) == -1) {
         std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;

@@ -61,8 +61,18 @@ int main(int argc, char *argv[]) {
 
     while (true) {
         // Get input from stdin
+        // Get a line of input from the user. The input is stored in the
+        // packet->data buffer, which is a char array of size BUFFER_SIZE.
+        // The fgets() function reads characters from stdin and stores them
+        // in the packet->data buffer until a newline character is found or
+        // the buffer is full (whichever comes first). The newline character
+        // is included in the buffer. If the user enters more characters than
+        // the buffer can hold, the excess characters are left in the input
+        // stream.
         printf("Enter message: ");
         if (fgets((char *)packet->data, BUFFER_SIZE, stdin) == NULL) {
+            // If fgets() returns NULL, it means an error occurred, such as
+            // an end-of-file condition. In this case, we break out of the loop.
             break;
         }
 
